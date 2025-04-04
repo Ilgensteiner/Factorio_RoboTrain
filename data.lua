@@ -48,76 +48,30 @@ local function deepcopy(orig)
 end
 
 -- Get the base cargo wagon prototype to inherit from
-local base_cargo_wagon = deepcopy(data.raw["cargo-wagon"]["cargo-wagon"])
+local roboport_wagon = deepcopy(data.raw["cargo-wagon"]["cargo-wagon"])
+local requester_wagon = deepcopy(data.raw["cargo-wagon"]["cargo-wagon"])
 
-data:extend({
-    {
-        type = "cargo-wagon",
-        name = "roboport-wagon-entity", -- Interner Name der Entität
-        icon = "__RoboTrain__/graphics/icons/roboport-wagon.png", -- Icon (für Karte, Zugübersicht etc.)
-        collision_box = base_cargo_wagon.collision_box,
-        icon_size = 64,
-        icon_mipmaps = 4,
-        flags = {"placeable-neutral", "player-creation", "placeable-off-grid", "not-rotatable"},
-        minable = {mining_time = 0.5, result = "roboport-wagon"}, -- Was bekommt man beim Abbauen?
-        max_speed = base_cargo_wagon.max_speed,
-        air_resistance = base_cargo_wagon.air_resistance,
-        joint_distance = base_cargo_wagon.joint_distance,
-        connection_distance = base_cargo_wagon.connection_distance,
-        vertical_selection_shift = base_cargo_wagon.vertical_selection_shift,
+-- Change the properties Roboport Waggon
+roboport_wagon.type = "cargo-wagon"
+roboport_wagon.name = "roboport-wagon-entity" -- Interner Name der Entität
+roboport_wagon.icon = "__RoboTrain__/graphics/icons/roboport-wagon.png" -- Icon (für Karte, Zugübersicht etc.)
+roboport_wagon.icon_size = 64
+roboport_wagon.icon_mipmaps = 4
+roboport_wagon.flags = {"placeable-neutral", "player-creation", "placeable-off-grid", "not-rotatable"}
+roboport_wagon.minable = {mining_time = 0.5, result = "roboport-wagon"} -- Was bekommt man beim Abbauen?
+roboport_wagon.weight = 1200 -- Gewicht (Basis: 1000), vielleicht etwas schwerer wegen Roboport?
+roboport_wagon.inventory_size = 20 -- Inventargröße (Basis: 40). Weniger Platz, da Raum für Roboport-Funktion benötigt wird? (Slots für Roboter, Reparaturkits)
 
-        weight = 1200, -- Gewicht (Basis: 1000), vielleicht etwas schwerer wegen Roboport?
-        braking_force = base_cargo_wagon.braking_force,
-        friction_force = base_cargo_wagon.friction_force,
-        energy_per_hit_point = base_cargo_wagon.energy_per_hit_point,
+-- Change the properties Requester Waggon
+requester_wagon.type = "cargo-wagon"
+requester_wagon.name = "requester-wagon-entity"
+requester_wagon.icon = "__RoboTrain__/graphics/icons/requester-wagon.png"
+requester_wagon.icon_size = 64
+requester_wagon.icon_mipmaps = 4
+requester_wagon.flags = {"placeable-neutral", "player-creation", "placeable-off-grid", "not-rotatable"}
+requester_wagon.minable = {mining_time = 0.5, result = "requester-wagon"} -- Was bekommt man beim Abbauen?
 
-        inventory_size = 15, -- Inventargröße (Basis: 40). Weniger Platz, da Raum für Roboport-Funktion benötigt wird? (Slots für Roboter, Reparaturkits)
-        -- WICHTIG: Wir erben die Grafiken und Sounds vom Basis-Waggon, bis wir eigene haben!
-        pictures = base_cargo_wagon.pictures,
-        horizontal_animation = base_cargo_wagon.horizontal_animation,
-        vertical_animation = base_cargo_wagon.vertical_animation,
-        horizontal_turret_animation = base_cargo_wagon.horizontal_turret_animation,
-        vertical_turret_animation = base_cargo_wagon.vertical_turret_animation,
-        turn_animation = base_cargo_wagon.turn_animation,
-        sound_no_fuel = base_cargo_wagon.sound_no_fuel,
-        working_sound = base_cargo_wagon.working_sound,
-        -- Eigene Eigenschaften für die Logik in control.lua könnten hier hinzugefügt werden,
-        -- aber im Moment verlassen wir uns auf den Namen zur Identifizierung.
-        -- equipment_grid = "my-roboport-wagon-grid", -- Optional: Wenn man Ausrüstungsslots nutzen will (komplexer)
-    },
-    {
-        type = "cargo-wagon",
-        name = "requester-wagon-entity",
-        icon = "__RoboTrain__/graphics/icons/requester-wagon.png",
-        collision_box = base_cargo_wagon.collision_box,
-        icon_size = 64,
-        icon_mipmaps = 4,
-        flags = {"placeable-neutral", "player-creation", "placeable-off-grid", "not-rotatable"},
-        minable = {mining_time = 0.5, result = "requester-wagon"},
-        max_speed = base_cargo_wagon.max_speed,
-        air_resistance = base_cargo_wagon.air_resistance,
-        joint_distance = base_cargo_wagon.joint_distance,
-        connection_distance = base_cargo_wagon.connection_distance,
-        vertical_selection_shift = base_cargo_wagon.vertical_selection_shift,
-
-        weight = 1000, -- Standardgewicht
-        braking_force = base_cargo_wagon.braking_force,
-        friction_force = base_cargo_wagon.friction_force,
-        energy_per_hit_point = base_cargo_wagon.energy_per_hit_point,
-
-        inventory_size = 40, -- Standard-Inventargröße für Güterwaggons
-        -- WICHTIG: Wir erben die Grafiken und Sounds vom Basis-Waggon
-        pictures = base_cargo_wagon.pictures,
-        wheels = base_cargo_wagon.wheels,
-        horizontal_animation = base_cargo_wagon.horizontal_animation,
-        vertical_animation = base_cargo_wagon.vertical_animation,
-        horizontal_turret_animation = base_cargo_wagon.horizontal_turret_animation,
-        vertical_turret_animation = base_cargo_wagon.vertical_turret_animation,
-        turn_animation = base_cargo_wagon.turn_animation,
-        sound_no_fuel = base_cargo_wagon.sound_no_fuel,
-        working_sound = base_cargo_wagon.working_sound,
-    }
-})
+data:extend({roboport_wagon, requester_wagon})
 
 
 -- ### 3. Rezept Prototypen ###
