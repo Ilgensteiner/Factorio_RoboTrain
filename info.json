@@ -1,0 +1,13 @@
+{
+  "name": "RoboTrain",
+  "version": "0.0.1",
+  "title": "RoboTrain Logistics",
+  "author": "Ilgensteiner",
+  "contact": "Deine E-Mail oder Foren-Profil (optional)",
+  "homepage": "Link zu deiner Mod-Seite (optional)",
+  "description": "Fügt Zügen Roboport- und Logistikanforderungs-Waggons hinzu.",
+  "factorio_version": "2.0",
+  "dependencies": [
+    "base >= 2.0"
+  ]
+}
